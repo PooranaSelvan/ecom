@@ -15,12 +15,13 @@ const importData = async () => {
 
     try{
 
+        // Deleting The Db models
         await Order.deleteMany();
         await Product.deleteMany();
         await User.deleteMany();
 
+        // Inserting Our Datas Into DB
         const createUser = await User.insertMany(users);
-
         const sampleProduct = await Product.insertMany(products);
 
         console.log("Date Imported");
@@ -51,6 +52,7 @@ const destroyData = async () => {
 
 }
 
+// Cmd Line Arguments used to delete datas from db
 if(process.argv[2] === "-d"){
     destroyData();
 } else {

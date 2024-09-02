@@ -1,27 +1,19 @@
-import React, { useEffect, useState } from 'react'
 import Product from '../components/Product'
-import axios from 'axios';
+import { useGetProductsQuery } from '../slices/productSlice';
 
 
 const Homepage = () => {
 
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    
-    const fetchProducts = async () => {
-      const response = await axios.get("http://localhost:5000/api/products/");
-
-      setProducts(response.data);
-    }
-    fetchProducts();
-
-  }, []);
+  const { data:products, error, isLoading } = useGetProductsQuery();
+  
+  if(isLoading) return <p>Loading...</p>;
+  if(error) return <p>{error}</p>;
+  
 
 
   return (
     <>
-        <h2 className="text-3xl mx-4 my-10 text-white">All Product</h2>
+        <h2 className="text-3xl mx-4 my-10 text-white dark:text-black">All Product</h2>
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5">
             {
                 products.map( (product) => {

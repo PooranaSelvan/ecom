@@ -4,8 +4,12 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class', // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      display: ['dark'],
+      opacity: ['dark'],
+    },
   },
   plugins: [
     require('daisyui')

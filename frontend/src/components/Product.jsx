@@ -1,12 +1,11 @@
-import {Link} from "react-router-dom"
-import Rating from "./Rating"
-import axios from "axios"
+import {Link} from "react-router-dom";
+import Rating from "./Rating";
 
 const Product = ({products}) => {
 
   return (
     <Link to={`/product/${products._id}`}>
-      <div className="card bg-base-100 shadow-xl mb-4 mx-4 text-[#DBD8E3]" id={`${products._id}`}>
+      <div className="card bg-gray-800 shadow-xl mb-4 mx-4 text-[#DBD8E3]" id={`${products._id}`}>
 
         <figure>
           <img src={`${products.image}`} alt="Shoes" />

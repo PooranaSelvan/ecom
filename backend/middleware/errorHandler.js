@@ -1,3 +1,6 @@
+// It was from asyncHandler used to handle err from middleware
+// We can also see the errors in postman.
+
 const notFound = (req, res, next) => {
     const error = new Error(`Not Found - ${req.originalUrl}`);
     res.status(404);

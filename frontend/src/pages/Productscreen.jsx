@@ -1,32 +1,24 @@
-import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Rating from '../components/Rating';
-import axios from 'axios';
-
-
+import { useGetProductDetailQuery } from '../slices/productSlice';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux'; // dispatch is used to update the actions [An action is an object that describes what happened in the application (e.g., a user clicked a button, data was fetched, etc.). ]
+import { addCart } from '../slices/cartSlice';
 
 
 const ProductScreen = () => {
 
   const { id: productId } = useParams();
-  const [product, setProduct] = useState({});
+  const { data:product, error, isLoading } = useGetProductDetailQuery(productId);
+  const [qty, setQty] = useState(1);
+  const dispatch = useDispatch();
 
+  const addToCartHandler = () => {
+    dispatch(addCart({...product, qty})); // ithula dispatch vachu addCart ooda action aa update panrom [products aa spread panni athula namaku kedacha qty uhm oru object la add panrom antha obj aa dispatch panrom]
+  }
 
-  useEffect(() => {
-
-    const fetchProduct = async () => {
-
-      const response = await axios.get(`http://localhost:5000/api/products/${productId}`);
-      setProduct(response.data);
-
-    }
-
-    fetchProduct();
-
-  }, [productId]);
-
-
-
+  if(isLoading) return <p>Loading...</p>
+  if(error) return <p>{error.message}</p>
 
   return (
     <div className='mt-4 mx-4'>
@@ -34,9 +26,9 @@ const ProductScreen = () => {
         <button className="btn btn-accent">Go back</button>
       </Link>
 
-      <div className='grid md:grid-cols-2 gap-10 mt-10 text-[#DBD8E3]'>
-        <div className='md:grid-cols-6'>
-          <img className="h-[500px] w-full rounded-lg" src={`${product.image}`} alt="Product Image" />
+      <div className='grid md:grid-cols-2 gap-10 md:mt-10'>
+        <div className='flex justify-center items-center'>
+          <img className="h-[450px] w-full object-contain rounded-2xl" src={`${product.image}`} alt="Product Image" />
         </div>
         <div className='md:grid-cols-6'>
           <div className="card">
@@ -50,11 +42,26 @@ const ProductScreen = () => {
               </div>
 
               <p>Price {product.price}</p>
-              <p>{product.countInStock > 0 ? "In stock" : "No stock"}</p>
+              <p className='font-bold'>{product.countInStock > 0 ? "In stock" : "No stock Left.."}</p>
+
+              {product.countInStock > 0 ? 
+              <>
+              <div className='my-4'>
+                <p>Quantity:</p>
+                <select name='dropdown' className="select select-bordered w-full max-w-xs" onChange={(e) => setQty(e.target.value)}>
+                    {[...Array(product.countInStock).keys()].map((stock) => ( 
+                      <option key={stock + 1}>{stock + 1}</option>
+                    ))}
+                </select>
+              </div>
 
               <div className="card-actions">
-                <button className="btn btn-secondary">Add to cart</button>
-              </div>
+                <button onClick={addToCartHandler} className="btn btn-secondary">Add to cart</button>
+              </div>     
+              </>
+                : null
+              }
+
             </div>
           </div>
 

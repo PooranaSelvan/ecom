@@ -1,19 +1,12 @@
 import express from "express";
 import { getProducts, getProductsById } from "../controllers/productController.js";
 
+// Routes Must need to send to create seperate api.
+
 const router = express.Router();
 
+router.route("/").get(getProducts); // Getting a Base End Point..
 
-// desc Fecth all products
-// route GET /api/products
-// access Pubilc
-
-router.route("/").get(getProducts);
-
-// desc Fecth all product By Id
-// route GET /api/products/:id
-// access Pubilc
-
-router.route("/:id").get(getProductsById);
+router.route("/:id").get(getProductsById); // Getting products screen with id.
 
 export default router;
