@@ -4,6 +4,7 @@ import { useGetProductsQuery } from '../slices/productSlice';
 
 const Homepage = () => {
 
+  // namma anga export panni inject panna method aa inga call panrom athula 
   const { data:products, error, isLoading } = useGetProductsQuery();
   
   if(isLoading) return <p>Loading...</p>;

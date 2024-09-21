@@ -4,6 +4,7 @@ import Rating from "./Rating";
 const Product = ({products}) => {
 
   return (
+    // intha product id namma click panra id ooda match agum athu thaa productScreen
     <Link to={`/product/${products._id}`}>
       <div className="card bg-gray-800 shadow-xl mb-4 mx-4 text-[#DBD8E3]" id={`${products._id}`}>
 

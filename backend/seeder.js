@@ -1,8 +1,6 @@
-import mongoose from "mongoose";
-
-import Order from "../backend/model/orderModel.js"
-import Product from "../backend/model/productModel.js"
-import User  from "../backend/model/userModel.js"
+import User from "./model/userModel.js";
+import Product from "./model/productModel.js";
+import Order from "./model/orderModel.js";
 
 import products from "./data/products.js";
 import users from "./data/users.js";
@@ -20,9 +18,22 @@ const importData = async () => {
         await Product.deleteMany();
         await User.deleteMany();
 
-        // Inserting Our Datas Into DB
+        // Inserting Users Into DB
         const createUser = await User.insertMany(users);
-        const sampleProduct = await Product.insertMany(products);
+        // console.log(createUser);
+
+        // users model ooda first data va get panrom because athu thaa admin
+        const adminUser = createUser[0]._id;
+        // console.log(adminUser);
+        
+        // namma json data va map panrom atha adminUser kooda spread panni obj va store panrom
+        const sampleProducts = products.map((product) => {
+            return {...product, user:adminUser};
+        });
+
+        // Inserting Products To The DB
+        const Products = await Product.insertMany(sampleProducts);
+        // console.log(Products);
 
         console.log("Date Imported");
 

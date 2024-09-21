@@ -11,14 +11,22 @@ const app = express();
 // Cors to access the api from any endpoints
 app.use(cors());
 
+// Itha use panna thaa api [link] muliyama varra data varum ilana undefined thaa varum
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
+
 // Need to set the port that api will run
 const port = 5000;
 
 // Calling The Db
 connectDB();
 
-// Ithu Enanu Paakanum
+// /api/products/ ithu tha endopints domain ku apro podura endpoint athuku ulla namma productRoutes aa call panrom
+// anga namma Express-Router use panni divide panrom means / apro vantha oonu varanum ithuve id vantha inunu varanum 
+// antha mathri divide panrom 
 app.use("/api/products/", productRoutes);
+
+// ithu user routes ithu default aa endpoint ithula namma neraya use panikalam..
 app.use("/api/users/", userRoutes);
 
 // Calling ErrorHandler & Not Found Errors..

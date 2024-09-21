@@ -5,8 +5,11 @@ import { getProducts, getProductsById } from "../controllers/productController.j
 
 const router = express.Router();
 
-router.route("/").get(getProducts); // Getting a Base End Point..
+// /api/products/ - ithula ithu / base endpoint inga thaa namma ela products uhm display panrom
+router.route("/").get(getProducts);
 
-router.route("/:id").get(getProductsById); // Getting products screen with id.
+
+// api/products/:id - ithu la namma id pass panni seperate product aa display panna try panrom 
+router.route("/:id").get(getProductsById);
 
 export default router;

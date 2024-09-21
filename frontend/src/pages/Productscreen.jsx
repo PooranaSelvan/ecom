@@ -8,11 +8,14 @@ import { addCart } from '../slices/cartSlice';
 
 const ProductScreen = () => {
 
+  // intha productId namma useParams vachu get panrom anga product la link la podura id
   const { id: productId } = useParams();
+
   const { data:product, error, isLoading } = useGetProductDetailQuery(productId);
   const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
 
+  // ithu addToCart ithu vanthu cart la add panna use aagum
   const addToCartHandler = () => {
     dispatch(addCart({...product, qty})); // ithula dispatch vachu addCart ooda action aa update panrom [products aa spread panni athula namaku kedacha qty uhm oru object la add panrom antha obj aa dispatch panrom]
   }

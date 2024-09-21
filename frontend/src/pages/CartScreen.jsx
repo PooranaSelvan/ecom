@@ -3,15 +3,20 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { MdDelete } from "react-icons/md";
 
-import { addCart } from "../slices/cartSlice";
+import { addCart,removeFromCart } from "../slices/cartSlice";
 
 const CartScreen = () => {
   const { cartItem } = useSelector((state) => state.cart);
-  console.log(cartItem);
+  // console.log(cartItem);
 
   const dispatch = useDispatch();
   const addToCartHandler = (item, qty) => {
     dispatch(addCart({ ...item, qty }));
+  };
+
+  const removeFromCartHandler = (id) => {
+    // console.log(id);
+    dispatch(removeFromCart(id));
   };
 
   return (
@@ -79,11 +84,11 @@ const CartScreen = () => {
             <div className="card">
               <div className="card-body">
                 <h2 className="card-title mb-3">
-                  Sub Total ({cartItem.reduce((acc, item) => acc + item.qty, 0)}
+                  Total Items: ({cartItem.reduce((acc, item) => acc + item.qty, 0)}
                   )
                 </h2>
                 <h2 className="card-title mb-3">
-                  Total Price (
+                  Total Price:   (
                   {cartItem
                     .reduce((acc, item) => acc + item.qty * item.price, 0)
                     .toFixed()}

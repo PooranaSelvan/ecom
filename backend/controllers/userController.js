@@ -1,24 +1,80 @@
 import asyncHandler from "../middleware/asyncHandler.js";
-import userModel from "../model/userModel.js";
+import User from "../model/userModel.js";
+import generateToken from "../utils/generateToken.js";
+import bcrypt from "bcrypt";
 
 // authUser
-// @Access Public
 // /api/users/login
-
 const authUser = asyncHandler(async (req, res) => {
-    res.send("User Logged") // Got Logged On [Post]
+    // console.log(req.body)
+    const {email, password} = req.body; // Url valiya pass panra data va destructure panrom
+    const user = await User.findOne({email}); // email vachu data db la irka nu search pannum
+    // console.log(user);
+
+    // user found & db la irukura password aa match panni paakurom [bcrypt]
+    if(user && (await user.matchPassword(password))){
+    
+    generateToken(res,user._id);
+
+    res.json({
+        _id:user._id,
+        name:user.name,
+        email:user.email,
+        isAdmin:user.isAdmin
+    })
+    } else{
+        res.status(401);
+        throw new Error("Invalid Email Or Password");
+    }
 });
 
 // @Access Public
 // /api/users/
 const registerUser = asyncHandler(async (req, res) => {
-    res.send("User Register"); // Got Users On [Post]
+    const {name, email, password} = req.body; // namma pass panra name,email,password aa get panni vaikrom
+    // console.log(name,email,password)
+
+    // email vachu nammaloda data already ulla iruka nu check panrom 
+    const userExists = await User.findOne({email});
+
+    // if data iruntha status 400 agirum
+    if(userExists){
+        res.status(400);
+        throw new Error("User Already Exists"); 
+    }
+
+    // user ula ilana userModel la create panrom
+    const user = await User.create({
+        name,
+        email,
+        password:bcrypt.hashSync(password,10) // create pannum pothu password hash panni store panrom
+    });
+    
+    // user create aachuna new jwt token create aagum 
+    if(user){
+        generateToken(res,user._id);
+        res.status(201).json({
+            _id:user._id,
+            name:user.name,
+            email:user.email,
+            isAdmin:user.isAdmin
+        });
+    } else{
+        res.status(400);
+        throw new Error("Invalid User Data");
+    }
+
 });
 
 // @Access Private
 // /api/users/logout
 const logoutUser = asyncHandler(async (req, res) => {
-    res.send("User Logout"); // Got Logout On [Post]
+    res.cookie("jwt", "", {
+        expires: new Date(0),
+        httpOnly: true,
+    });
+
+    res.status(200).json({message:"Logged out successfully"});
 });
 
 // @Access Public
