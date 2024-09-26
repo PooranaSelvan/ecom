@@ -14,14 +14,14 @@ const authUser = asyncHandler(async (req, res) => {
     // user found & db la irukura password aa match panni paakurom [bcrypt]
     if(user && (await user.matchPassword(password))){
     
-    generateToken(res,user._id);
+        generateToken(res,user._id);
 
-    res.json({
+        res.json({
         _id:user._id,
         name:user.name,
         email:user.email,
         isAdmin:user.isAdmin
-    })
+        })
     } else{
         res.status(401);
         throw new Error("Invalid Email Or Password");
@@ -47,7 +47,7 @@ const registerUser = asyncHandler(async (req, res) => {
     const user = await User.create({
         name,
         email,
-        password:bcrypt.hashSync(password,10) // create pannum pothu password hash panni store panrom
+        password
     });
     
     // user create aachuna new jwt token create aagum 
@@ -70,8 +70,8 @@ const registerUser = asyncHandler(async (req, res) => {
 // /api/users/logout
 const logoutUser = asyncHandler(async (req, res) => {
     res.cookie("jwt", "", {
-        expires: new Date(0),
         httpOnly: true,
+        expires: new Date(0),
     });
 
     res.status(200).json({message:"Logged out successfully"});

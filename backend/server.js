@@ -4,6 +4,7 @@ import connectDB from "./config/db.js";
 import productRoutes from "./routes/productRoutes.js"
 import userRoutes from "./routes/userRoutes.js"
 import { errorHandler, notFound } from "./middleware/errorHandler.js";
+import  cookieParser from "cookie-parser"
 
 // Declaring Express
 const app = express();
@@ -14,6 +15,7 @@ app.use(cors());
 // Itha use panna thaa api [link] muliyama varra data varum ilana undefined thaa varum
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+app.use(cookieParser());
 
 // Need to set the port that api will run
 const port = 5000;
