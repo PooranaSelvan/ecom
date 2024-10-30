@@ -6,12 +6,15 @@ import { MdDelete } from "react-icons/md";
 import { addCart,removeFromCart } from "../slices/cartSlice";
 
 const CartScreen = () => {
+  // useSelector is used to select a state - ithula namma cartItem aa select panrom
   const { cartItem } = useSelector((state) => state.cart);
   // console.log(cartItem);
 
+
+  // dispatch use panni actions valiya state update panrom - it is the only way to update the state
   const dispatch = useDispatch();
   const addToCartHandler = (item, qty) => {
-    dispatch(addCart({ ...item, qty }));
+    dispatch(addCart({ ...item, qty })); // calling addCart from a redux - athoda state la update panna porm
   };
 
   const removeFromCartHandler = (id) => {

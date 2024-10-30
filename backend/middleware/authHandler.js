@@ -4,10 +4,11 @@ import jwt from "jsonwebtoken";
 
 // Protect 
 // check if logged in or not
+// use logged aa ilaya ku check pannum - itha call paniruka place la login aana thaa req nadakum. check [userRoutes.js]
 const protect = asyncHandler(async (req, res, next) => {
 
     const token = req.cookies.jwt;
-    console.log(token);
+    // console.log(token);
 
     if(!token){
         res.status(401);
@@ -15,7 +16,8 @@ const protect = asyncHandler(async (req, res, next) => {
     }
 
     try{
-        const decoded = jwt.verify(token, "secret");
+        const decoded = jwt.verify(token, "secret"); // ithu antha token iruka nu check panni verify pannum
+        // console.log(decoded);
         req.user = await User.findById(decoded.UserId);
         next();
     } catch(err){
@@ -37,4 +39,4 @@ const admin = (req, res, next) => {
 
 };
 
-export {protect, admin};
+export { protect, admin };

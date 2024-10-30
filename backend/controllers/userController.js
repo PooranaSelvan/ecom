@@ -69,9 +69,9 @@ const registerUser = asyncHandler(async (req, res) => {
 // @Access Private
 // /api/users/logout
 const logoutUser = asyncHandler(async (req, res) => {
-    res.cookie("jwt", "", {
+    res.cookie("jwt", "", { // token aa clear panrom..
         httpOnly: true,
-        expires: new Date(0),
+        expires: new Date(0), // expire aa date aa reset panrom
     });
 
     res.status(200).json({message:"Logged out successfully"});
