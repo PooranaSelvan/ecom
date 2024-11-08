@@ -9,6 +9,7 @@ function App() {
   return (
     <>
       <Header />
+      <ToastContainer />
       <div className="container mx-auto">
         <Outlet />
       </div>

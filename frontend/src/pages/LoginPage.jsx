@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { EyeIcon, EyeOffIcon } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
-import { ToastContainer ,toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useLoginMutation } from '../slices/userSlice';
 import { setCredentials } from '../slices/authSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -24,7 +24,7 @@ export default function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    
+
     if(email === "" || password === ""){
       toast("Please Enter Email or Password..")
     } else{
@@ -32,8 +32,8 @@ export default function LoginPage() {
         const res = await loginApiCall({ email, password }).unwrap();
         // console.log(res);
 
-        dispatch(setCredentials({...res}));
-
+        dispatch(setCredentials({...res})); // sending to setCredentials
+        toast.success("Logged In Successfully..");
         navigate("/");
       } catch(err){
         toast.error(err.data.message);
@@ -42,9 +42,8 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-primary to-secondary flex items-center justify-center px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4 sm:px-6 lg:px-8">
       <div className="card w-full max-w-md bg-base-100 shadow-xl">
-      <ToastContainer />
         <div className="card-body">
           <h2 className="card-title text-3xl font-bold text-center">Welcome back</h2>
           <p className="text-center text-base-content/70">Please sign in to your account</p>

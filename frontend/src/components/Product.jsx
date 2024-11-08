@@ -7,11 +7,7 @@ const Product = ({ products }) => {
     <Link to={`/product/${products._id}`} className="block transition-transform hover:scale-105">
       <div className="card bg-gray-800 shadow-xl mb-4 mx-4 text-[#DBD8E3] overflow-hidden" id={`${products._id}`}>
         <figure className="relative pb-[56.25%]">
-          <img
-            src={`${products.image}`}
-            alt={products.name}
-            className="absolute top-0 left-0 w-full h-full object-cover"
-          />
+          <img src={`${products.image}`} alt={products.name} className="absolute top-0 left-0 w-full h-full object-cover"/>
         </figure>
         <div className="card-body p-4">
           <h2 className="card-title text-xl font-bold mb-2 line-clamp-1">{products.name}</h2>

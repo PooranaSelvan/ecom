@@ -10,5 +10,5 @@ const baseQuery = fetchBaseQuery({
 
 export const apiSlice = createApi({
     baseQuery: baseQuery,
-    endpoints: (builder) => ({}), // ithukulla namma endpoints aa push panna porom dynamic aa
+    endpoints: (builder) => ({}), // ithukulla namma endpoints aa inject panna porom dynamic aa
 });
