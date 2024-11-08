@@ -7,7 +7,7 @@ import bcrypt from "bcrypt";
 // /api/users/login
 const authUser = asyncHandler(async (req, res) => {
     // console.log(req.body)
-    const {email, password} = req.body; // Url valiya pass panra data va destructure panrom
+    const {email, password} = req.body; // frontend la pass panra data va get panrom
     const user = await User.findOne({email}); // email vachu data db la irka nu search pannum
     // console.log(user);
 

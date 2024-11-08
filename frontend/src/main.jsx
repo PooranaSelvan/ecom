@@ -8,6 +8,7 @@ import Homepage from './pages/Homepage.jsx';
 import Productscreen from './pages/Productscreen.jsx';
 import store from './store.js';
 import CartScreen from './pages/CartScreen.jsx';
+import LoginPage from './pages/LoginPage.jsx';
 
 
 
@@ -18,6 +19,7 @@ const router = createBrowserRouter(
        <Route index={true} path='/' element={<Homepage />}/>  
        <Route path='/product/:id' element={<Productscreen/>}/>
        <Route path='/cart' element={<CartScreen/>}/>
+       <Route path='/login' element={<LoginPage/>}/>
     </Route>
   )
   

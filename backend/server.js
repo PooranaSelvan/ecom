@@ -10,7 +10,10 @@ import  cookieParser from "cookie-parser"
 const app = express();
 
 // Cors to access the api from any endpoints
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true,
+}));
 
 // Itha use panna thaa api [link] muliyama varra data varum ilana undefined thaa varum
 app.use(express.json());
@@ -32,8 +35,9 @@ app.use("/api/products/", productRoutes);
 app.use("/api/users/", userRoutes);
 
 // Calling ErrorHandler & Not Found Errors..
-app.use(errorHandler);
 app.use(notFound);
+app.use(errorHandler);
+
 
 // listen to run a api 
 app.listen(port , () => console.log(`Server Is Running On Port:${port}`))

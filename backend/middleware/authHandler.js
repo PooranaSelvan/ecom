@@ -7,7 +7,7 @@ import jwt from "jsonwebtoken";
 // use logged aa ilaya ku check pannum - itha call paniruka place la login aana thaa req nadakum. check [userRoutes.js]
 const protect = asyncHandler(async (req, res, next) => {
 
-    const token = req.cookies.jwt;
+    let token = req.cookies.jwt;
     // console.log(token);
 
     if(!token){
@@ -17,8 +17,7 @@ const protect = asyncHandler(async (req, res, next) => {
 
     try{
         const decoded = jwt.verify(token, "secret"); // ithu antha token iruka nu check panni verify pannum
-        // console.log(decoded);
-        req.user = await User.findById(decoded.UserId);
+        req.user = await User.findById(decoded.userId).select("-password");
         next();
     } catch(err){
         res.status(401);
@@ -26,10 +25,14 @@ const protect = asyncHandler(async (req, res, next) => {
     }
     
 });
+
+
+
 // Admin
 // check if admin or not
 
 const admin = (req, res, next) => {
+    // console.log(req);
     if(req.user && req.user.isAdmin){
         next();
     } else {

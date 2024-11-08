@@ -7,15 +7,14 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         // getProducts - itha call panna athula db la irukura ela products uhm return pannum
         getProducts: builder.query({
             query:() => ({
-                // product url -  ithu thaa enoda product url ithula enoda route aa vachrukan 
-                // athu enoda BASE_URL kooda poi attach agikum apo athu https://localhost:5000/api/products nu change agirum
+                // getProducts - stores the products data from the db.
                 url:PRODUCT_URL
             })
         }),
         // getProductDetail - itha call panna athu req.params.id vachu id ku suit aana product aa return pannum
         getProductDetail:builder.query({
             query:(productId) => ({
-                // same as above but ithula productId uhm kooda pass panrom
+                // same as above but ithula productId uhm kooda pass panrom for product page
                 url:`${PRODUCT_URL}/${productId}`
             })
         }),

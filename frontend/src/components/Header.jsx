@@ -1,14 +1,35 @@
 import { Link } from "react-router-dom"
 import { onModeButtonClick } from "../darkMode"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { useEffect,useState } from "react"
+import { ToastContainer } from 'react-toastify';
+import authSlice, { logout } from "../slices/authSlice"
+import { useLogoutMutation } from '../slices/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
     
     const { cartItem } = useSelector((state) => state.cart);
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const [logoutApiCall] = useLogoutMutation();    
+
+    const handleLogout = async() => {
+        try{
+            await logoutApiCall();
+            dispatch(logout());
+            toast.success("Successfully logged out.");
+            navigate("/login")
+        } catch(err){
+            console.log(err);
+        }
+    }
+
     return (
         <div className="navbar bg-base-100 text-[#DBD8E3]">
+            <ToastContainer />
             <div className="flex-1">
                 <Link to="/" className="btn btn-ghost text-xl">Our Ecom</Link>
             </div>
@@ -31,18 +52,9 @@ const Header = () => {
                             <ul className="rounded-t-none p-2 bg-base-100 shadow-xl">
                                 <li><a>Profile</a></li>
                                 <li id='theme' onClick={onModeButtonClick}><a>Dark</a></li>
-                                <li><a>Logout</a></li>
+                                <li onClick={handleLogout}><a>Logout</a></li>
                             </ul>
                         </details>
-                    </li>
-                    <li>
-                        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                            <div className="w-10 rounded-full">
-                              <img
-                                alt="Tailwind CSS Navbar component"
-                                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-                            </div>
-                        </div>
                     </li>
                 </ul>
             </div>

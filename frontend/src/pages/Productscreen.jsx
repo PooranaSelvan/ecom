@@ -12,7 +12,8 @@ const ProductScreen = () => {
   const dispatch = useDispatch();
 
   const addToCartHandler = () => {
-    dispatch(addCart({ ...product, qty }));
+    // dispatch vachu redux state ooda action ku data pass panrom
+    dispatch(addCart({ ...product, qty })); // addCart func ku pass panrom
   };
 
   if (isLoading) return <div className="flex justify-center items-center h-screen"><div className="loading loading-spinner loading-lg"></div></div>;

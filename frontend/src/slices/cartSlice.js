@@ -12,6 +12,7 @@ const cartSlice = createSlice({
         addCart(state, action) {
           const product = action.payload;
           // console.log(product)
+
           const existItem = state.cartItem.find((a) => a._id === product._id);
   
           if (existItem) {
@@ -44,6 +45,7 @@ const cartSlice = createSlice({
         
           localStorage.setItem("cart", JSON.stringify(state));
         },
+
         // Remove From Cart
         removeFromCart(state, action){
           state.cartItem = state.cartItem.filter((x) => x._id !== action.payload);
