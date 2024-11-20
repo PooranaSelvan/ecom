@@ -22,6 +22,7 @@ app.use(cors({
   credentials: true,
 }));
 
+
 // Itha use panna thaa api [link] muliyama varra data varum ilana undefined thaa varum
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
