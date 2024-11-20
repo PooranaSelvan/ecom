@@ -20,8 +20,14 @@ export const userApiSlice = apiSlice.injectEndpoints({
                     url: `${USERS_URL}/logout`, // http://localhost:5000/api/users/logout
                     method: "POST",
                })
-          })
+          }),
+          getUserProfile: builder.query({
+               query: () => ({
+                   url: `${USERS_URL}/profile`,
+                   method: "GET",
+               })
+          }),
      })
 })
 
-export const { useLoginMutation, useLogoutMutation } = userApiSlice;
+export const { useLoginMutation, useLogoutMutation, useGetUserProfileQuery } = userApiSlice;

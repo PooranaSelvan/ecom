@@ -3,109 +3,126 @@
 import React, { useState } from 'react'
 import { EyeIcon, EyeOffIcon } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
-import { toast } from 'react-toastify';
-import { useLoginMutation } from '../slices/userSlice';
-import { setCredentials } from '../slices/authSlice';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify'
+import { useLoginMutation } from '../slices/userSlice'
+import { setCredentials } from '../slices/authSlice'
+import { useNavigate } from 'react-router-dom'
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
 
-  // destructing
+  // form validating
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  // showpass icon
+  const [showPassword, setShowPassword] = useState(false);
+
+  // mutation for login
   const [loginApiCall, { isLoading }] = useLoginMutation();
-
-  const { userInfo } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // submit btn in form
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
-    if(email === "" || password === ""){
-      toast("Please Enter Email or Password..")
-    } else{
-      try{
+    if (email === "" || password === "") {
+      // err if email or pass is empty
+      toast.error("Please Enter Email or Password..")
+    } else {
+      try {
+        // call api for login
         const res = await loginApiCall({ email, password }).unwrap();
-        // console.log(res);
 
-        dispatch(setCredentials({...res})); // sending to setCredentials
+        // set credentials in authSlice
+        dispatch(setCredentials({...res}));
+
+        // a toast message
         toast.success("Logged In Successfully..");
-        navigate("/");
-      } catch(err){
-        toast.error(err.data.message);
+
+        // navigating users to "/"
+        navigate("/")
+      } catch (err) {
+        toast.error(err.data.message)
       }
     }
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4 sm:px-6 lg:px-8">
-      <div className="card w-full max-w-md bg-base-100 shadow-xl">
-        <div className="card-body">
-          <h2 className="card-title text-3xl font-bold text-center">Welcome back</h2>
-          <p className="text-center text-base-content/70">Please sign in to your account</p>
-          <form onSubmit={handleSubmit} className="form-control gap-4">
-            <div>
-              <label className="label" htmlFor="email-address">
-                <span className="label-text">Email address</span>
-              </label>
-              <input
-                id="email-address"
-                name="email"
-                type="email"
-                autoComplete="email"
-                className="input input-bordered w-full"
-                placeholder="Email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div>
-              <label className="label" htmlFor="password">
-                <span className="label-text">Password</span>
-              </label>
-              <div className="relative">
-                <input
-                  id="password"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  autoComplete="current-password"
-                  className="input input-bordered w-full pr-10"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <button
-                  type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <EyeOffIcon className="h-5 w-5 text-base-content/70" />
-                  ) : (
-                    <EyeIcon className="h-5 w-5 text-base-content/70" />
-                  )}
-                </button>
-              </div>
-            </div>
-            <div className="flex flex-wrap items-end">
-              <a href="#" className="link link-primary">Forgot your password?</a>
-            </div>
-            <button type="submit" className="btn btn-primary w-full">
-              Sign in
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8 bg-white dark:bg-gray-800 p-10 rounded-xl shadow-lg mt-24">
+
+        <div>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-gray-200">Welcome back</h2>
+          <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-300">Please sign in to your account</p>
+        </div>
+
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <div className="rounded-md shadow-sm -space-y-px">
+
+          <div>
+            <label htmlFor="email-address" className="sr-only">
+              Email address
+            </label>
+            <input id="email-address" name="email" type="email" autoComplete="email" className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address" value={email} onChange={(e) => setEmail(e.target.value)}/>
+          </div>
+
+          <div className="relative">
+            <label htmlFor="password" className="sr-only">
+              Password
+            </label>
+            <input id="password" name="password" type={showPassword ? "text" : "password"} autoComplete="current-password" className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+            <button type="button" className="absolute inset-y-0 right-0 pr-3 flex items-center" onClick={() => setShowPassword(!showPassword)}>
+              {showPassword ? (
+                <EyeOffIcon className="h-5 w-5 text-gray-400 dark:text-gray-500" />
+              ) : (
+                <EyeIcon className="h-5 w-5 text-gray-400 dark:text-gray-500" />
+              )}
             </button>
-          </form>
-          <div className="divider">OR</div>
-          <div className="text-center">
-            <p className="text-base-content/70">
+          </div>
+
+        </div>
+
+
+          <div className="flex items-center justify-between">
+            <div className="text-sm">
+              <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                Forgot your password?
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <button type="submit" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" disabled={isLoading}>
+              {isLoading ? 'Signing in...' : 'Sign in'}
+            </button>
+          </div>
+        </form>
+
+        <div className="mt-6">
+          <div className="relative">
+
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300"></div>
+            </div>
+
+            <div className="relative flex justify-center text-sm">
+              <span className="px-4 bg-white dark:bg-gray-800 text-gray-500">Or</span>
+            </div>
+
+          </div>
+          <div className="mt-6 text-center">
+            <p className="text-sm text-gray-600 dark:text-gray-300">
               {"Don't have an account? "}
-              <a href="#" className="link link-primary">Sign up</a>
+              <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                Sign up
+              </a>
             </p>
           </div>
+
         </div>
+        
       </div>
     </div>
   )

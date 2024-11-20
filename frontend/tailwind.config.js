@@ -11,7 +11,5 @@ export default {
       opacity: ['dark'],
     },
   },
-  plugins: [
-    require('daisyui')
-  ],
+  plugins: [],
 }

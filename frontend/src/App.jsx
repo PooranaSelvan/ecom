@@ -7,13 +7,11 @@ import 'react-toastify/dist/ReactToastify.css';
 function App() {
 
   return (
-    <>
+    <div className="bg-white dark:bg-gray-800">
       <Header />
       <ToastContainer />
-      <div className="container mx-auto">
-        <Outlet />
-      </div>
-    </>
+      <Outlet />
+    </div>
   )
 }
 
