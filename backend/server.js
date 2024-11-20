@@ -16,7 +16,6 @@ const app = express();
 dotenv.config();
 
 
-// Cors to access the api from any endpoints
 app.use(cors({
   origin: process.env.CORS_ORIGIN,
   credentials: true,
