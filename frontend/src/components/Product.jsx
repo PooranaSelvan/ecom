@@ -5,7 +5,7 @@ import Rating from "./Rating";
 const Product = ({ products }) => {
   return (
     <Link to={`/product/${products._id}`} className="block transition-transform hover:scale-105">
-      <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg  shadow-gray-800 hover:shadow-gray-700 overflow-hidden mb-4 mx-4" id={`${products._id}`}>
+      <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg  shadow-gray-500 dark:shadow-gray-800 hover:shadow-gray-700 overflow-hidden mb-4 mx-4" id={`${products._id}`}>
         <div className="relative pb-[56.25%]">
           <img src={`${products.image}`} alt={products.name} className="absolute top-0 left-0 w-full h-full object-cover"/>
         </div>

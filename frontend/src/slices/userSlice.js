@@ -4,6 +4,15 @@ import { apiSlice } from "./apiSlice";
 
 export const userApiSlice = apiSlice.injectEndpoints({
      endpoints:(builder) => ({
+          register:builder.mutation({
+               // query taken an argument - data which was passed from frontend
+               // antha data va intha url la send panrom "POST" method la - check userController.js with this url.
+               query:(data) => ({
+                    url:USERS_URL, // http://localhost:5000/api/users/
+                    method:"POST",
+                    body:data // here we updating data got from frontend
+               })
+          }),
           // mutation means updating something - it was named login
           login:builder.mutation({
                // query taken an argument - data which was passed from frontend
@@ -30,4 +39,4 @@ export const userApiSlice = apiSlice.injectEndpoints({
      })
 })
 
-export const { useLoginMutation, useLogoutMutation, useGetUserProfileQuery } = userApiSlice;
+export const { useRegisterMutation, useLoginMutation, useLogoutMutation, useGetUserProfileQuery } = userApiSlice;

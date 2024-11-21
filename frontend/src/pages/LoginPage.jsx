@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { useLoginMutation } from '../slices/userSlice'
 import { setCredentials } from '../slices/authSlice'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function LoginPage() {
 
@@ -115,9 +115,9 @@ export default function LoginPage() {
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600 dark:text-gray-300">
               {"Don't have an account? "}
-              <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <Link to='/register' className="font-medium text-indigo-600 hover:text-indigo-500">
                 Sign up
-              </a>
+              </Link>
             </p>
           </div>
 

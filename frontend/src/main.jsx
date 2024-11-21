@@ -10,6 +10,7 @@ import store from './store.js';
 import CartScreen from './pages/CartScreen.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import ProfileScreen from './pages/ProfileScreen.jsx';
+import RegisterPage from './pages/RegisterPage.jsx';
 
 
 
@@ -22,6 +23,7 @@ const router = createBrowserRouter(
        <Route path='/cart' element={<CartScreen/>}/>
        <Route path='/login' element={<LoginPage/>}/>
        <Route path='/profile' element={<ProfileScreen/>}/>
+       <Route path='/register' element={<RegisterPage/>}/>
     </Route>
   )
   
